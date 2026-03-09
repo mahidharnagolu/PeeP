@@ -55,7 +55,7 @@ export default function RootLayout() {
             router.replace('/auth/login');
         } else if (user && inAuthGroup) {
             // Logged in but on auth screen, redirect to home
-            router.replace('/');
+            router.replace('/(tabs)');
         }
     }, [user, isInitialized, segments]);
 

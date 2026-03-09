@@ -244,14 +244,9 @@ export default function HomeScreen() {
                 duration={3000}
             />
 
-            {/* Header */}
-            <View style={styles.header}>
-                <TouchableOpacity onPress={handleSignOut} style={styles.signOutBtn}>
-                    <Text style={styles.signOutText}>👋</Text>
-                </TouchableOpacity>
-                <Text style={styles.title}>Peep</Text>
-                <Text style={styles.logo}>👁️</Text>
-                <Text style={styles.welcome}>Hey, {profile?.username || 'friend'}!</Text>
+            {/* Header Block */}
+            <View style={styles.headerBlock}>
+                <Text style={styles.title}>PeeP</Text>
             </View>
 
             {/* Friends List */}
@@ -288,10 +283,12 @@ export default function HomeScreen() {
                 />
             )}
 
-            {/* Add Friend FAB */}
-            <TouchableOpacity style={styles.fab} onPress={handleAddFriend}>
-                <Text style={styles.fabText}>+</Text>
-            </TouchableOpacity>
+            {/* Add Friend FAB (Overlapping content block at bottom right) */}
+            <View style={styles.fabContainer}>
+                <TouchableOpacity style={styles.fab} onPress={handleAddFriend}>
+                    <Text style={styles.fabText}>+</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -299,40 +296,30 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Theme.colors.background,
+        backgroundColor: '#4A90E2', // Temporary vivid blue matching wireframe background
         paddingTop: 60,
-    },
-    header: {
-        alignItems: 'center',
-        marginBottom: 20,
         paddingHorizontal: 20,
     },
-    signOutBtn: {
-        position: 'absolute',
-        left: 20,
-        top: 0,
-        padding: 8,
-    },
-    signOutText: {
-        fontSize: 24,
+    headerBlock: {
+        backgroundColor: Theme.colors.background, // White block
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+        alignItems: 'flex-start',
     },
     title: {
         color: Theme.colors.text,
-        fontSize: 42,
+        fontSize: 32,
         fontWeight: 'bold',
-        letterSpacing: 2,
-    },
-    logo: {
-        fontSize: 60,
-        marginVertical: 8,
-    },
-    welcome: {
-        color: '#888',
-        fontSize: 16,
+        letterSpacing: 1,
     },
     list: {
-        paddingHorizontal: 20,
-        paddingBottom: 100,
+        backgroundColor: Theme.colors.background, // White container
+        borderRadius: 8,
+        padding: 16,
+        paddingBottom: 40,
+        flexGrow: 1,
     },
     emptyState: {
         flex: 1,
@@ -367,14 +354,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    fab: {
+    fabContainer: {
         position: 'absolute',
-        bottom: 32,
-        right: 24,
-        width: 56,
-        height: 56,
-        borderRadius: 28,
-        backgroundColor: Theme.colors.text,
+        bottom: 20,
+        right: 20,
+        zIndex: 10,
+    },
+    fab: {
+        width: 72,
+        height: 72,
+        borderRadius: 36,
+        backgroundColor: Theme.colors.background,
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
@@ -384,9 +374,9 @@ const styles = StyleSheet.create({
         elevation: 8,
     },
     fabText: {
-        color: Theme.colors.background,
-        fontSize: 32,
-        fontWeight: 'bold',
-        marginTop: -2,
+        color: Theme.colors.text,
+        fontSize: 40,
+        fontWeight: '400',
+        lineHeight: 44, // Align plus vertically
     },
 });
