@@ -68,6 +68,9 @@ temp/
 # Build artifacts
 *.tsbuildinfo
 
+# Bug reports
+bugreport-*.zip
+
 # Secrets (never commit these!)
 google-services.json
 GoogleService-Info.plist
