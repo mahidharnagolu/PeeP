@@ -120,7 +120,6 @@ export default function HomeScreen() {
                     fetchFriends(user.id);
                 } else if (nextAppState.match(/inactive|background/)) {
                     // App went to background - keep broadcasting but slower (30 sec) to save battery
-                    // This is important so friends can see what app you're using!
                     startBroadcasting(30000);
                 }
                 appState.current = nextAppState;
@@ -227,13 +226,6 @@ export default function HomeScreen() {
         router.push('/friends');
     };
 
-    const handleSignOut = () => {
-        Alert.alert('Sign Out', 'Are you sure?', [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'Sign Out', style: 'destructive', onPress: signOut },
-        ]);
-    };
-
     return (
         <View style={styles.container}>
             {/* Toast Notification */}
@@ -244,19 +236,20 @@ export default function HomeScreen() {
                 duration={3000}
             />
 
-            {/* Header Block */}
-            <View style={styles.headerBlock}>
-                <Text style={styles.title}>PeeP</Text>
+            {/* BeReal-style centered header */}
+            <View style={styles.header}>
+                <Text style={styles.logo}>PeeP.</Text>
             </View>
 
             {/* Friends List */}
             {friends.length === 0 && !isLoading ? (
                 <View style={styles.emptyState}>
-                    <Text style={styles.emptyEmoji}>👀</Text>
-                    <Text style={styles.emptyTitle}>No friends yet</Text>
-                    <Text style={styles.emptySubtitle}>Add friends to start peeping!</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={handleAddFriend}>
-                        <Text style={styles.addButtonText}>+ Add Friends</Text>
+                    <Text style={styles.emptyTitle}>Wow, it's really calm in here!</Text>
+                    <Text style={styles.emptySubtitle}>
+                        Your friends haven't posted yet.{'\n'}Be the first one.
+                    </Text>
+                    <TouchableOpacity style={styles.emptyButton} onPress={handleAddFriend}>
+                        <Text style={styles.emptyButtonText}>Add Friends</Text>
                     </TouchableOpacity>
                 </View>
             ) : (
@@ -277,18 +270,16 @@ export default function HomeScreen() {
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={onRefresh}
-                            tintColor={Theme.colors.text}
+                            tintColor="#FFFFFF"
                         />
                     }
                 />
             )}
 
-            {/* Add Friend FAB (Overlapping content block at bottom right) */}
-            <View style={styles.fabContainer}>
-                <TouchableOpacity style={styles.fab} onPress={handleAddFriend}>
-                    <Text style={styles.fabText}>+</Text>
-                </TouchableOpacity>
-            </View>
+            {/* Add Friend FAB */}
+            <TouchableOpacity style={styles.fab} onPress={handleAddFriend} activeOpacity={0.8}>
+                <Text style={styles.fabText}>+</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -296,30 +287,22 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#4A90E2', // Temporary vivid blue matching wireframe background
-        paddingTop: 60,
-        paddingHorizontal: 20,
+        backgroundColor: '#000000',
     },
-    headerBlock: {
-        backgroundColor: Theme.colors.background, // White block
-        paddingVertical: 20,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        marginBottom: 20,
-        alignItems: 'flex-start',
+    header: {
+        paddingTop: 56,
+        paddingBottom: 16,
+        alignItems: 'center',
     },
-    title: {
-        color: Theme.colors.text,
-        fontSize: 32,
-        fontWeight: 'bold',
-        letterSpacing: 1,
+    logo: {
+        color: '#FFFFFF',
+        fontSize: 26,
+        fontWeight: '800',
+        letterSpacing: 0.5,
     },
     list: {
-        backgroundColor: Theme.colors.background, // White container
-        borderRadius: 8,
-        padding: 16,
-        paddingBottom: 40,
-        flexGrow: 1,
+        paddingHorizontal: 16,
+        paddingBottom: 100,
     },
     emptyState: {
         flex: 1,
@@ -327,44 +310,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 40,
     },
-    emptyEmoji: {
-        fontSize: 80,
-        marginBottom: 16,
-    },
     emptyTitle: {
-        color: Theme.colors.text,
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 8,
+        color: '#FFFFFF',
+        fontSize: 20,
+        fontWeight: '700',
+        marginBottom: 10,
+        textAlign: 'center',
     },
     emptySubtitle: {
-        color: '#888',
-        fontSize: 16,
+        color: '#999999',
+        fontSize: 15,
         textAlign: 'center',
-        marginBottom: 24,
+        lineHeight: 22,
+        marginBottom: 28,
     },
-    addButton: {
-        backgroundColor: Theme.colors.text,
-        paddingHorizontal: 24,
-        paddingVertical: 12,
+    emptyButton: {
+        backgroundColor: '#FFFFFF',
+        paddingHorizontal: 28,
+        paddingVertical: 14,
         borderRadius: 24,
     },
-    addButtonText: {
-        color: Theme.colors.background,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    fabContainer: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-        zIndex: 10,
+    emptyButtonText: {
+        color: '#000000',
+        fontSize: 15,
+        fontWeight: '700',
     },
     fab: {
-        width: 72,
-        height: 72,
-        borderRadius: 36,
-        backgroundColor: Theme.colors.background,
+        position: 'absolute',
+        bottom: 100,
+        right: 20,
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
@@ -374,9 +352,9 @@ const styles = StyleSheet.create({
         elevation: 8,
     },
     fabText: {
-        color: Theme.colors.text,
-        fontSize: 40,
-        fontWeight: '400',
-        lineHeight: 44, // Align plus vertically
+        color: '#000000',
+        fontSize: 28,
+        fontWeight: '300',
+        lineHeight: 30,
     },
 });

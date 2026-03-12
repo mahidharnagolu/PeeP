@@ -1,26 +1,19 @@
 export const Colors = {
-    light: {
-        background: '#FFFFFF',
-        text: '#000000',
-        primary: '#000000',
-        secondary: '#333333',
-        card: '#F5F5F5',
-        border: '#E0E0E0',
-        notification: '#000000',
-        error: '#FF0000', // Keep error red, or make it stylized? Sticking to standard for now but maybe monochrome.
-    },
     dark: {
         background: '#000000',
         text: '#FFFFFF',
         primary: '#FFFFFF',
-        secondary: '#CCCCCC',
-        card: '#121212',
-        border: '#333333',
+        secondary: '#999999',
+        surface: '#1A1A1A',
+        surfaceBorder: '#2A2A2A',
+        card: '#1A1A1A',
+        border: '#2A2A2A',
+        muted: '#666666',
         notification: '#FFFFFF',
-        error: '#FF4444',
+        error: '#FF3B30',
     },
 };
 
 export const Theme = {
-    colors: Colors.dark, // Default to dark mode as per "Pure Black & White theme" request
+    colors: Colors.dark,
 };

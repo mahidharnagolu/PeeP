@@ -8,24 +8,29 @@ export default function TabLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarStyle: {
-                    backgroundColor: Theme.colors.background,
-                    borderTopColor: Theme.colors.border,
-                    borderTopWidth: 1,
-                    height: 80, // Taller tab bar to match wireframe proportionally
-                    paddingBottom: 20,
-                    paddingTop: 10,
+                    backgroundColor: '#000000',
+                    borderTopColor: '#1A1A1A',
+                    borderTopWidth: 0.5,
+                    height: 85,
+                    paddingBottom: 25,
+                    paddingTop: 12,
                 },
-                tabBarActiveTintColor: Theme.colors.text,
-                tabBarInactiveTintColor: Theme.colors.secondary,
-                tabBarShowLabel: false, // Match wireframe (icons only)
+                tabBarActiveTintColor: '#FFFFFF',
+                tabBarInactiveTintColor: '#666666',
+                tabBarShowLabel: false,
             }}
         >
             <Tabs.Screen
                 name="index"
                 options={{
                     title: 'Home',
-                    tabBarIcon: ({ color, size }) => (
-                        <Home color={color} size={30} strokeWidth={2.5} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <Home
+                            color={color}
+                            size={26}
+                            strokeWidth={focused ? 2.5 : 1.8}
+                            fill={focused ? color : 'transparent'}
+                        />
                     ),
                 }}
             />
@@ -33,8 +38,13 @@ export default function TabLayout() {
                 name="notifications"
                 options={{
                     title: 'Notifications',
-                    tabBarIcon: ({ color, size }) => (
-                        <Bell color={color} size={30} strokeWidth={2.5} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <Bell
+                            color={color}
+                            size={26}
+                            strokeWidth={focused ? 2.5 : 1.8}
+                            fill={focused ? color : 'transparent'}
+                        />
                     ),
                 }}
             />
@@ -42,8 +52,12 @@ export default function TabLayout() {
                 name="profile"
                 options={{
                     title: 'Profile',
-                    tabBarIcon: ({ color, size }) => (
-                        <User color={color} size={30} strokeWidth={2.5} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <User
+                            color={color}
+                            size={26}
+                            strokeWidth={focused ? 2.5 : 1.8}
+                        />
                     ),
                 }}
             />

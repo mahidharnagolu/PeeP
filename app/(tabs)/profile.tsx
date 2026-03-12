@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Theme } from '@/constants/Colors';
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'expo-router';
+import { Settings, LogOut } from 'lucide-react-native';
 
 export default function ProfileScreen() {
     const { profile, signOut } = useAuthStore();
@@ -14,23 +14,40 @@ export default function ProfileScreen() {
 
     return (
         <View style={styles.container}>
+            {/* BeReal-style centered header */}
             <View style={styles.header}>
-                <Text style={styles.title}>Profile</Text>
+                <Text style={styles.logo}>PeeP.</Text>
             </View>
 
             <View style={styles.content}>
-                <View style={styles.avatarSection}>
+                {/* Avatar */}
+                <View style={styles.avatarContainer}>
                     <View style={styles.avatar}>
                         <Text style={styles.avatarText}>
                             {profile?.username?.charAt(0).toUpperCase() || 'P'}
                         </Text>
                     </View>
-                    <Text style={styles.username}>@{profile?.username || 'user'}</Text>
+                    <Text style={styles.username}>
+                        {profile?.username || 'user'}.
+                    </Text>
+                    <Text style={styles.handle}>@{profile?.username || 'user'}</Text>
                 </View>
 
-                <TouchableOpacity style={styles.signOutBtn} onPress={handleSignOut}>
-                    <Text style={styles.signOutText}>Sign Out</Text>
-                </TouchableOpacity>
+                {/* Actions */}
+                <View style={styles.actions}>
+                    <TouchableOpacity style={styles.actionButton} activeOpacity={0.7}>
+                        <Text style={styles.actionButtonText}>Share Profile</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.signOutButton}
+                        onPress={handleSignOut}
+                        activeOpacity={0.7}
+                    >
+                        <LogOut color="#FF3B30" size={18} />
+                        <Text style={styles.signOutText}>Sign Out</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -39,60 +56,79 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Theme.colors.background,
+        backgroundColor: '#000000',
     },
     header: {
-        paddingTop: 60,
-        paddingHorizontal: 20,
-        paddingBottom: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: Theme.colors.border,
+        paddingTop: 56,
+        paddingBottom: 16,
+        alignItems: 'center',
     },
-    title: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: Theme.colors.text,
+    logo: {
+        color: '#FFFFFF',
+        fontSize: 26,
+        fontWeight: '800',
+        letterSpacing: 0.5,
     },
     content: {
         flex: 1,
-        padding: 20,
-        alignItems: 'center',
+        paddingHorizontal: 20,
     },
-    avatarSection: {
+    avatarContainer: {
         alignItems: 'center',
-        marginVertical: 40,
+        marginTop: 40,
+        marginBottom: 40,
     },
     avatar: {
         width: 100,
         height: 100,
         borderRadius: 50,
-        backgroundColor: Theme.colors.text,
+        backgroundColor: '#1A1A1A',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 16,
     },
     avatarText: {
         fontSize: 40,
-        fontWeight: 'bold',
-        color: Theme.colors.background,
+        fontWeight: '700',
+        color: '#FFFFFF',
     },
     username: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: Theme.colors.text,
+        fontSize: 28,
+        fontWeight: '800',
+        color: '#FFFFFF',
+        marginBottom: 4,
     },
-    signOutBtn: {
-        backgroundColor: Theme.colors.error,
-        paddingHorizontal: 32,
-        paddingVertical: 16,
+    handle: {
+        fontSize: 15,
+        color: '#999999',
+    },
+    actions: {
+        gap: 12,
+        marginTop: 20,
+    },
+    actionButton: {
+        backgroundColor: '#FFFFFF',
+        paddingVertical: 14,
         borderRadius: 12,
-        width: '100%',
         alignItems: 'center',
-        marginTop: 40,
+    },
+    actionButtonText: {
+        color: '#000000',
+        fontSize: 16,
+        fontWeight: '700',
+    },
+    signOutButton: {
+        flexDirection: 'row',
+        backgroundColor: '#1A1A1A',
+        paddingVertical: 14,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
     },
     signOutText: {
-        color: '#FFFFFF',
-        fontSize: 18,
-        fontWeight: 'bold',
+        color: '#FF3B30',
+        fontSize: 16,
+        fontWeight: '600',
     },
 });

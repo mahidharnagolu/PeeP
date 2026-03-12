@@ -1,10 +1,9 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, FlatList, Alert, ActivityIndicator } from 'react-native';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { Theme } from '@/constants/Colors';
 import { useAuthStore } from '@/stores/authStore';
 import { useFriendStore } from '@/stores/friendStore';
-import { ChevronLeft, UserPlus, Check, X, Search } from 'lucide-react-native';
+import { ChevronLeft, UserPlus, Check, X } from 'lucide-react-native';
 
 export default function FriendsScreen() {
     const router = useRouter();
@@ -60,33 +59,36 @@ export default function FriendsScreen() {
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-                    <ChevronLeft color={Theme.colors.text} size={28} />
+                    <ChevronLeft color="#FFFFFF" size={28} />
                 </TouchableOpacity>
-                <Text style={styles.title}>Friends</Text>
+                <Text style={styles.logo}>PeeP.</Text>
+                <View style={{ width: 44 }} />
             </View>
 
             {/* Search/Add Friend */}
             <View style={styles.searchSection}>
-                <Text style={styles.sectionTitle}>Add Friend</Text>
                 <View style={styles.searchRow}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Enter username"
-                        placeholderTextColor="#666"
-                        value={username}
-                        onChangeText={setUsername}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
+                    <View style={styles.searchInputContainer}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Add or search friends"
+                            placeholderTextColor="#666666"
+                            value={username}
+                            onChangeText={setUsername}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={[styles.searchBtn, isSearching && styles.searchBtnDisabled]}
+                        style={[styles.searchBtn, (isSearching || !username.trim()) && styles.searchBtnDisabled]}
                         onPress={handleSearch}
                         disabled={isSearching || !username.trim()}
+                        activeOpacity={0.7}
                     >
                         {isSearching ? (
-                            <ActivityIndicator color={Theme.colors.background} size="small" />
+                            <ActivityIndicator color="#000000" size="small" />
                         ) : (
-                            <UserPlus color={Theme.colors.background} size={20} />
+                            <UserPlus color="#000000" size={18} />
                         )}
                     </TouchableOpacity>
                 </View>
@@ -98,7 +100,7 @@ export default function FriendsScreen() {
             {/* Pending Requests */}
             <View style={styles.requestsSection}>
                 <Text style={styles.sectionTitle}>
-                    Friend Requests {pendingRequests.length > 0 ? `(${pendingRequests.length})` : ''}
+                    FRIEND REQUESTS {pendingRequests.length > 0 ? `· ${pendingRequests.length} NEW` : ''}
                 </Text>
 
                 {pendingRequests.length === 0 ? (
@@ -109,22 +111,29 @@ export default function FriendsScreen() {
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => (
                             <View style={styles.requestCard}>
+                                <View style={styles.requestAvatar}>
+                                    <Text style={styles.requestAvatarText}>
+                                        {item.user.username.charAt(0).toUpperCase()}
+                                    </Text>
+                                </View>
                                 <View style={styles.requestInfo}>
-                                    <Text style={styles.requestName}>@{item.user.username}</Text>
-                                    <Text style={styles.requestTime}>wants to be friends</Text>
+                                    <Text style={styles.requestName}>{item.user.username}</Text>
+                                    <Text style={styles.requestHandle}>@{item.user.username}</Text>
                                 </View>
                                 <View style={styles.requestActions}>
                                     <TouchableOpacity
-                                        style={[styles.actionBtn, styles.acceptBtn]}
+                                        style={styles.acceptBtn}
                                         onPress={() => handleAccept(item.id)}
+                                        activeOpacity={0.7}
                                     >
-                                        <Check color="#000" size={18} />
+                                        <Text style={styles.acceptBtnText}>Add</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
-                                        style={[styles.actionBtn, styles.rejectBtn]}
+                                        style={styles.rejectBtn}
                                         onPress={() => handleReject(item.id)}
+                                        activeOpacity={0.7}
                                     >
-                                        <X color="#fff" size={18} />
+                                        <X color="#999999" size={18} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -139,112 +148,125 @@ export default function FriendsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Theme.colors.background,
-        paddingTop: 60,
+        backgroundColor: '#000000',
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingTop: 56,
         paddingHorizontal: 16,
-        marginBottom: 24,
+        paddingBottom: 16,
     },
     backBtn: {
         padding: 8,
-        marginRight: 8,
     },
-    title: {
-        color: Theme.colors.text,
-        fontSize: 28,
-        fontWeight: 'bold',
+    logo: {
+        color: '#FFFFFF',
+        fontSize: 26,
+        fontWeight: '800',
+        letterSpacing: 0.5,
     },
     searchSection: {
-        paddingHorizontal: 20,
-        marginBottom: 32,
-    },
-    sectionTitle: {
-        color: Theme.colors.text,
-        fontSize: 18,
-        fontWeight: '600',
-        marginBottom: 12,
+        paddingHorizontal: 16,
+        marginBottom: 28,
     },
     searchRow: {
         flexDirection: 'row',
-        gap: 12,
+        gap: 10,
+    },
+    searchInputContainer: {
+        flex: 1,
     },
     input: {
-        flex: 1,
-        backgroundColor: '#1a1a1a',
-        borderRadius: 12,
-        padding: 14,
-        fontSize: 16,
-        color: Theme.colors.text,
-        borderWidth: 1,
-        borderColor: '#333',
+        backgroundColor: '#1A1A1A',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        fontSize: 15,
+        color: '#FFFFFF',
     },
     searchBtn: {
-        backgroundColor: Theme.colors.text,
-        width: 50,
-        borderRadius: 12,
+        backgroundColor: '#FFFFFF',
+        width: 46,
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
     searchBtnDisabled: {
-        opacity: 0.5,
+        opacity: 0.4,
     },
     error: {
-        color: '#ff4444',
-        fontSize: 14,
+        color: '#FF3B30',
+        fontSize: 13,
         marginTop: 8,
     },
     requestsSection: {
         flex: 1,
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
+    },
+    sectionTitle: {
+        color: '#999999',
+        fontSize: 12,
+        fontWeight: '700',
+        letterSpacing: 1,
+        marginBottom: 16,
     },
     emptyText: {
-        color: '#666',
-        fontSize: 16,
+        color: '#666666',
+        fontSize: 15,
         textAlign: 'center',
-        marginTop: 20,
+        marginTop: 40,
     },
     requestCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: '#1a1a1a',
-        padding: 16,
-        borderRadius: 12,
-        marginBottom: 12,
-        borderWidth: 1,
-        borderColor: '#333',
+        paddingVertical: 12,
+    },
+    requestAvatar: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: '#1A1A1A',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12,
+    },
+    requestAvatarText: {
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontWeight: '700',
     },
     requestInfo: {
         flex: 1,
     },
     requestName: {
-        color: Theme.colors.text,
+        color: '#FFFFFF',
         fontSize: 16,
         fontWeight: '600',
     },
-    requestTime: {
-        color: '#888',
-        fontSize: 14,
-        marginTop: 2,
+    requestHandle: {
+        color: '#999999',
+        fontSize: 13,
+        marginTop: 1,
     },
     requestActions: {
         flexDirection: 'row',
-        gap: 8,
-    },
-    actionBtn: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
-        justifyContent: 'center',
         alignItems: 'center',
+        gap: 12,
     },
     acceptBtn: {
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#FFFFFF',
+        paddingVertical: 7,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+    },
+    acceptBtnText: {
+        color: '#000000',
+        fontSize: 13,
+        fontWeight: '700',
     },
     rejectBtn: {
-        backgroundColor: '#333',
+        padding: 4,
     },
 });

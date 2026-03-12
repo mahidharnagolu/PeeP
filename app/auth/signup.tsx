@@ -1,7 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { Theme } from '@/constants/Colors';
 import { useAuthStore } from '@/stores/authStore';
 
 export default function SignupScreen() {
@@ -53,8 +52,7 @@ export default function SignupScreen() {
                 <View style={styles.content}>
                     {/* Logo */}
                     <View style={styles.logoContainer}>
-                        <Text style={styles.logo}>👁️</Text>
-                        <Text style={styles.title}>Join Peep</Text>
+                        <Text style={styles.logo}>PeeP.</Text>
                         <Text style={styles.subtitle}>Create your account</Text>
                     </View>
 
@@ -63,7 +61,7 @@ export default function SignupScreen() {
                         <TextInput
                             style={styles.input}
                             placeholder="Username"
-                            placeholderTextColor="#666"
+                            placeholderTextColor="#666666"
                             value={username}
                             onChangeText={setUsername}
                             autoCapitalize="none"
@@ -74,7 +72,7 @@ export default function SignupScreen() {
                         <TextInput
                             style={styles.input}
                             placeholder="Email"
-                            placeholderTextColor="#666"
+                            placeholderTextColor="#666666"
                             value={email}
                             onChangeText={setEmail}
                             autoCapitalize="none"
@@ -85,7 +83,7 @@ export default function SignupScreen() {
                         <TextInput
                             style={styles.input}
                             placeholder="Password (min 6 chars)"
-                            placeholderTextColor="#666"
+                            placeholderTextColor="#666666"
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry
@@ -100,9 +98,10 @@ export default function SignupScreen() {
                             style={[styles.button, isLoading && styles.buttonDisabled]}
                             onPress={handleSignup}
                             disabled={isLoading}
+                            activeOpacity={0.8}
                         >
                             {isLoading ? (
-                                <ActivityIndicator color="#000" />
+                                <ActivityIndicator color="#000000" />
                             ) : (
                                 <Text style={styles.buttonText}>Create Account</Text>
                             )}
@@ -125,7 +124,7 @@ export default function SignupScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Theme.colors.background,
+        backgroundColor: '#000000',
     },
     scrollContent: {
         flexGrow: 1,
@@ -141,41 +140,36 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     logo: {
-        fontSize: 64,
-        marginBottom: 8,
-    },
-    title: {
-        fontSize: 36,
-        fontWeight: 'bold',
-        color: Theme.colors.text,
+        fontSize: 48,
+        fontWeight: '800',
+        color: '#FFFFFF',
         letterSpacing: 1,
     },
     subtitle: {
-        fontSize: 16,
-        color: '#888',
-        marginTop: 8,
+        fontSize: 15,
+        color: '#999999',
+        marginTop: 10,
     },
     form: {
-        gap: 16,
+        gap: 14,
     },
     input: {
-        backgroundColor: '#1a1a1a',
-        borderRadius: 12,
-        padding: 16,
+        backgroundColor: '#1A1A1A',
+        borderRadius: 10,
+        paddingVertical: 16,
+        paddingHorizontal: 16,
         fontSize: 16,
-        color: Theme.colors.text,
-        borderWidth: 1,
-        borderColor: '#333',
+        color: '#FFFFFF',
     },
     error: {
-        color: '#ff4444',
+        color: '#FF3B30',
         fontSize: 14,
         textAlign: 'center',
     },
     button: {
-        backgroundColor: Theme.colors.text,
+        backgroundColor: '#FFFFFF',
         borderRadius: 12,
-        padding: 16,
+        paddingVertical: 16,
         alignItems: 'center',
         marginTop: 8,
     },
@@ -183,9 +177,9 @@ const styles = StyleSheet.create({
         opacity: 0.6,
     },
     buttonText: {
-        color: Theme.colors.background,
-        fontSize: 18,
-        fontWeight: 'bold',
+        color: '#000000',
+        fontSize: 17,
+        fontWeight: '700',
     },
     footer: {
         flexDirection: 'row',
@@ -193,12 +187,12 @@ const styles = StyleSheet.create({
         marginTop: 32,
     },
     footerText: {
-        color: '#888',
-        fontSize: 16,
+        color: '#666666',
+        fontSize: 15,
     },
     footerLink: {
-        color: Theme.colors.text,
-        fontSize: 16,
-        fontWeight: 'bold',
+        color: '#FFFFFF',
+        fontSize: 15,
+        fontWeight: '700',
     },
 });
