@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PeeP.</string>
+    <string name="notification_channel_name">Peep Status</string>
+    <string name="notification_channel_description">Broadcasts your app activity to friends</string>
+</resources>

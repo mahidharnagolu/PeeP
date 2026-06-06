@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933889958779",
+    "project_id": "peep-ca068",
+    "storage_bucket": "peep-ca068.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933889958779:android:0b5ea5714cfeb01c1393de",
+        "android_client_info": {
+          "package_name": "com.anonymous.peep"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf5F22SWKFGwT5uyUNpE7skcShSl1ePIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
